@@ -1,26 +1,15 @@
-replicaCount: 1
-
-image:
-  repository: testingkyaw/mealie
-  tag: v2
-  pullPolicy: IfNotPresent
-
-containerPort: 9000
-
-
-db:
-  host: mealie-db-postgresql.database.svc.cluster.local
-  port: "5432"
-
-service:
-  type: NodePort
-  port: 9000
-  nodePort: 30900
-
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: database
 resources:
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
-  limits:
-    cpu: "500m"
-    memory: "512Mi"
+  - namespace.yaml
+labels:
+  - pairs:
+      app: mealie
+helmCharts:
+  - name: postgresql
+    repo: https://cetic.github.io/helm-charts
+    version: 0.2.1
+    releaseName: mealie-db
+    namespace: database
+    valuesFile: values-postgres.yaml
