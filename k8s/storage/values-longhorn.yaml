@@ -1,0 +1,11 @@
+defaultSettings:
+  defaultReplicaCount: 1
+persistence:
+  reclaimPolicy: Retain
+  defaultClassReplicaCount: 1
+csi:
+  kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet
+defaultSettings:
+  guaranteedInstanceManagerCPU: "0"
+preUpgradeChecker:
+  jobEnabled: false
